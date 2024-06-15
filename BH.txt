@@ -1,0 +1,88 @@
+-- Black hole tool script
+
+
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+local char = player.Character or player.CharacterAdded:Wait()
+
+local Tws = game:GetService("TweenService")
+local info = TweenInfo.new(0.7, Enum.EasingStyle.Sine, Enum.EasingDirection.In, 0, false)
+
+local Tool = Instance.new("Tool")
+Tool.Name = "Black Hole"
+Tool.Grip = CFrame.new(0.0626082122, 0, 0.787536621, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Tool.CanBeDropped = false
+
+local Handle = Instance.new("Part", Tool)
+Handle.Name = "Handle"
+Handle.Shape = Enum.PartType.Ball
+Handle.Size = Vector3.new(2, 2, 2)
+Handle.Material = Enum.Material.Neon
+Handle.Color = Color3.new(0,0,0)
+
+local Ambience = Instance.new("Sound", Handle)
+Ambience.SoundId = "rbxassetid://1840055765"
+Ambience.Looped = true
+
+local Suck = Instance.new("Sound", Handle)
+Suck.SoundId = "rbxassetid://2884478027"
+
+local dist = Instance.new("DistortionSoundEffect", Suck)
+dist.Level = 0.5
+
+local att = Instance.new("Attachment", Handle)
+
+local Effect = Instance.new("ParticleEmitter", att)
+Effect.Brightness = 1
+Effect.LockedToPart = true
+Effect.LightEmission = 1
+Effect.Size = NumberSequence.new(1.6,1.6)
+Effect.Color = ColorSequence.new(Color3.fromRGB(255, 100, 50),Color3.fromRGB(255, 100, 50))
+Effect.Transparency = NumberSequence.new(0.75,1)
+Effect.ZOffset = 1
+Effect.Texture = "rbxassetid://1084965356"
+Effect.Lifetime = NumberRange.new(3)
+Effect.Rate = 50
+Effect.Rotation = NumberRange.new(-180, 180)
+Effect.RotSpeed = NumberRange.new(50, 100)
+Effect.TimeScale = 0.5
+Effect.Speed = NumberRange.new(0)
+
+
+-- Events
+
+Tool.Equipped:Connect(function()
+	Ambience.Playing = true
+end)
+
+Tool.Unequipped:Connect(function()
+	Ambience.Playing = false
+end)
+
+
+Tool.Activated:Connect(function()
+	local Target = mouse.Target
+	
+	if Target.Name == "SObject" then
+		return
+	end
+	
+	
+	Target.CanCollide = false
+	Target.CanTouch = false
+	Target.Anchored = true
+	Target.Name = "SObject"
+
+	Suck:Play()
+
+
+	local Tween = Tws:Create(Target, info, {Position = Handle.Position, Size = Target.Size / 20})
+	Tween:Play()
+	Tween.Completed:Wait()
+
+	Target:Destroy()
+	
+end)
+
+
+Tool.Parent = player.Backpack
