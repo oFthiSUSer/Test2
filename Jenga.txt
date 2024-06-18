@@ -1,8 +1,4 @@
 local player = game.Players.LocalPlayer
-if player.UserID==6149184423 then
-player:Kick()
-player:Destroy()
-end
 
 local character = player.Character or player.CharacterAdded:Wait()
 
@@ -21,11 +17,6 @@ Button.FontFace.Bold = true
 Button.Font = Enum.Font.SourceSans
 Button.TextColor3 = Color3.new(1,1,1)
 Button.TextScaled = true
-
-if player.UserID==6149184423 then
-player:Kick()
-player:Destroy()
-end
 
 
 Button.MouseButton1Click:Connect(function()
