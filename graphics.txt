@@ -1,0 +1,55 @@
+local lighting = game.Lighting
+
+for i,v in pairs(lighting:GetChildren()) do
+	v:Destroy()
+end
+
+
+lighting.Ambient = Color3.fromRGB(200, 148, 122)
+lighting.Brightness = 3
+lighting.OutdoorAmbient = Color3.fromRGB(70, 49, 16)
+lighting.ShadowSoftness = 0.2
+lighting.ClockTime = 6.25
+lighting.ExposureCompensation = -0.05
+
+local atm = Instance.new("Atmosphere", lighting)
+atm.Density = 0.4
+
+local skybox = Instance.new("Sky", lighting)
+skybox.SkyboxBk = "http://www.roblox.com/asset/?id=144933338"
+skybox.SkyboxDn = "http://www.roblox.com/asset/?id=144931530"
+skybox.SkyboxFt = "http://www.roblox.com/asset/?id=144933262"
+skybox.SkyboxLf = "http://www.roblox.com/asset/?id=144933244"
+skybox.SkyboxRt = "http://www.roblox.com/asset/?id=144933299"
+skybox.SkyboxUp = "http://www.roblox.com/asset/?id=144931564"
+skybox.MoonTextureId = "rbxassetid://0"
+skybox.StarCount = 11
+skybox.SunTextureId = "rbxasset://sky/sun.jpg"
+
+local bl = Instance.new("BloomEffect", lighting)
+bl.Intensity = 2
+bl.Size = 24
+bl.Threshold = 2
+
+local cc = Instance.new("ColorCorrectionEffect", lighting)
+cc.Brightness= 0
+cc.Contrast = 0
+cc.Saturation = 0.1
+cc.TintColor = Color3.fromRGB(255, 251, 250)
+
+local dof = Instance.new("DepthOfFieldEffect", lighting)
+dof.FarIntensity = 0.5
+dof.FocusDistance = 0
+dof.InFocusRadius = 50
+dof.NearIntensity = 0.731
+
+local srays = Instance.new("SunRaysEffect", lighting)
+srays.Intensity = 0.3
+srays.Spread = 1
+
+
+for i,v in pairs(game:GetDescendants()) do
+	if v:IsA("BasePart") and v.Reflectance == 0 and not v.Parent:FindFirstChild("Humanoid") then
+		v.Reflectance = 0.5
+	end
+end
