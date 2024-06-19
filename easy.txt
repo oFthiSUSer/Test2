@@ -1,0 +1,32 @@
+Chat_Message = true
+
+local Chat = game:GetService("Chat")
+local player = game.Players.LocalPlayer
+local Char = player.Character or player.CharacterAdded:Wait()
+
+local gui = Instance.new("ScreenGui", player.PlayerGui)
+local Button = Instance.new("TextButton", gui)
+Button.Text = ""
+Button.BackgroundColor3 = Color3.fromRGB(255, 55, 55)
+Button.Position = UDim2.new(0.917, 0,0.823, 0)
+Button.Size = UDim2.new(0.078, 0,0.167, 0)
+
+local corner = Instance.new("UICorner", Button)
+corner.CornerRadius = UDim.new(1,0)
+
+local const = Instance.new("UIAspectRatioConstraint", Button)
+const.AspectRatio = 0.962
+
+local s = Instance.new("Sound", Button)
+s.SoundId = "rbxassetid://1660756958"
+
+Button.MouseButton1Click:Connect(function()
+	Button.Visible = false
+	s:Play()
+	wait(0.5)
+	if Chat_Message == true then
+		Chat:Chat(Char:WaitForChild("Head"),"That was easy.")
+	end
+	wait(2)
+	Button.Visible = true
+end)
