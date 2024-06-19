@@ -15,6 +15,7 @@ Button.ZIndex = 2
 
 Button.Text = "Win"
 Button.FontFace.Bold = true
+Button.Style = Enum.ButtonStyle.RobloxRoundDefaultButton
 Button.Font = Enum.Font.Nunito
 Button.RichText = true
 Button.TextColor3 = Color3.new(1,1,1)
