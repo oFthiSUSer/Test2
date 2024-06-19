@@ -9,7 +9,7 @@ Button.Style = Enum.ButtonStyle.Custom
 
 Button.Size = UDim2.new(0.119, 0, 0.089, 0)
 Button.Position = UDim2.new(0.005, 0, 0.904, 0)
-Button.BackgroundColor3 = Color3.new(1,1,1)
+Button.BackgroundColor3 = Color3.new(0,0,0)
 
 Button.ZIndex = 2
 
@@ -17,7 +17,7 @@ Button.Text = "Win"
 Button.FontFace.Bold = true
 Button.Font = Enum.Font.Nunito
 Button.RichText = true
-Button.TextColor3 = Color3.new(0,0,0)
+Button.TextColor3 = Color3.new(1,1,1)
 Button.TextScaled = true
 Button.Parent = Gui
 
