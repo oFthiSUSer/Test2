@@ -1,0 +1,72 @@
+local lighting = game.Lighting
+
+for i,v in pairs(lighting:GetChildren()) do
+	v:Destroy()
+end
+
+
+lighting.Ambient = Color3.fromRGB(200, 148, 122)
+lighting.Brightness = 3
+lighting.OutdoorAmbient = Color3.fromRGB(70, 49, 16)
+lighting.ShadowSoftness = 0.2
+lighting.ClockTime = 5
+lighting.ExposureCompensation = -0.1
+
+local atm = Instance.new("Atmosphere", lighting)
+atm.Density = 0.55
+
+local skybox = Instance.new("Sky", lighting)
+skybox.MoonAngularSize = 1.5
+skybox.SkyboxBk = "rbxassetid://2670643994"
+skybox.SkyboxDn = "rbxassetid://2670643365"
+skybox.SkyboxFt = "rbxassetid://2670643214"
+skybox.SkyboxLf = "rbxassetid://2670643070"
+skybox.SkyboxRt = "rbxassetid://2670644173"
+skybox.SkyboxUp = "rbxassetid://2670644331"
+skybox.MoonTextureId = "rbxassetid://1075087760"
+skybox.StarCount = 500
+skybox.SunTextureId = "rbxasset://sky/sun.jpg"
+
+local bl = Instance.new("BloomEffect", lighting)
+bl.Intensity = 2
+bl.Size = 24
+bl.Threshold = 2
+
+local cc = Instance.new("ColorCorrectionEffect", lighting)
+cc.Brightness= 0
+cc.Contrast = 0
+cc.Saturation = 0
+cc.TintColor = Color3.fromRGB(189, 179, 178)
+
+local dof = Instance.new("DepthOfFieldEffect", lighting)
+dof.FarIntensity = 0.5
+dof.FocusDistance = 0
+dof.InFocusRadius = 50
+dof.NearIntensity = 0.731
+
+local srays = Instance.new("SunRaysEffect", lighting)
+srays.Intensity = 0.3
+srays.Spread = 1
+
+
+for i,v in pairs(game:GetDescendants()) do
+	
+	if v:IsA("BasePart") and v.Reflectance == 0 and not v.Parent:FindFirstChild("Humanoid") then
+		v.Reflectance = 0.5
+	end
+	
+	if v:IsA("PointLight") or v:IsA("SurfaceLight") or v:IsA("SpotLight") then
+		v.Brightness += 1
+	end
+	
+end
+
+
+local amb = Instance.new("Sound", game.SoundService)
+amb.SoundId = "rbxassetid://390457804"
+amb.Looped = true
+amb.Playing = true
+
+-- if game.SoundService.AmbientReverb == Enum.ReverbType.NoReverb then
+	game.SoundService.AmbientReverb = Enum.ReverbType.Cave
+-- end
