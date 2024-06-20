@@ -1,6 +1,5 @@
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:FindFirstChildWhichIsA("Humanoid")
 
 function ChatMsg(message, dur)
 	if dur == nil then
@@ -20,22 +19,24 @@ end
 ChatMsg("Скрипт на админ команды запущен")
 
 commands = {
-	["/e speed"] = function()
+	["speed"] = function()
 		ChatMsg("Скорость увеличена на 50")
-		humanoid.WalkSpeed = humanoid.WalkSpeed + 50
+		character = player.Character or player.CharacterAdded:Wait()
+		character:FindFirstChildWhichIsA("Humanoid").WalkSpeed = character:FindFirstChildWhichIsA("Humanoid").WalkSpeed + 50
 	end,
-	["/e highjump"] = function()
+	["highjump"] = function()
 		ChatMsg("Прыжок увеличен на to 50")
-		humanoid.UseJumpPower = true
-		humanoid.JumpPower = humanoid.JumpPower + 50
+		character = player.Character or player.CharacterAdded:Wait()
+		character:FindFirstChildWhichIsA("Humanoid").UseJumpPower = true
+		character:FindFirstChildWhichIsA("Humanoid").JumpPower = character:FindFirstChildWhichIsA("Humanoid").JumpPower + 50
 	end,
-	["/e esp"] = function()
+	["esp"] = function()
 		ChatMsg("ESP включен")
 		for i,plr in pairs(game.Players:GetPlayers()) do
 			local char = plr.Character or plr.CharacterAdded:Wait()
 			for i,det in pairs(char:GetDescendants()) do
 				if det:IsA("BasePart") then
-					
+
 					local gui = Instance.new("SurfaceGui", det)
 					gui.Face = Enum.NormalId.Back
 					gui.Adornee = det
@@ -43,9 +44,9 @@ commands = {
 					local frame = Instance.new("Frame", gui)
 					frame.Size = UDim2.new(1,0,1,0)
 					frame.Transparency = 0.5
-					
+
 					frame.BackgroundColor3 = plr.TeamColor.Color
-					
+
 					local gui = Instance.new("SurfaceGui", det)
 					gui.Face = Enum.NormalId.Top
 					gui.Adornee = det
@@ -55,7 +56,7 @@ commands = {
 					frame.Transparency = 0.5
 
 					frame.BackgroundColor3 = plr.TeamColor.Color
-					
+
 					local gui = Instance.new("SurfaceGui", det)
 					gui.Face = Enum.NormalId.Left
 					gui.Adornee = det
@@ -65,7 +66,7 @@ commands = {
 					frame.Transparency = 0.5
 
 					frame.BackgroundColor3 = plr.TeamColor.Color
-					
+
 					local gui = Instance.new("SurfaceGui", det)
 					gui.Face = Enum.NormalId.Front
 					gui.Adornee = det
@@ -75,7 +76,7 @@ commands = {
 					frame.Transparency = 0.5
 
 					frame.BackgroundColor3 = plr.TeamColor.Color
-					
+
 					local gui = Instance.new("SurfaceGui", det)
 					gui.Face = Enum.NormalId.Bottom
 					gui.Adornee = det
@@ -85,7 +86,7 @@ commands = {
 					frame.Transparency = 0.5
 
 					frame.BackgroundColor3 = plr.TeamColor.Color
-					
+
 					local gui = Instance.new("SurfaceGui", det)
 					gui.Face = Enum.NormalId.Right
 					gui.Adornee = det
@@ -95,22 +96,30 @@ commands = {
 					frame.Transparency = 0.5
 
 					frame.BackgroundColor3 = plr.TeamColor.Color
-					
+
 				end
 			end
 		end
-		
+
 	end,
-	
-	["/e easy"] = function()
+
+	["easy"] = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/oFthiSUSer/Test2/main/easy.txt",true))()
 	end,
-	
-	["/e blackhole"] = function()
+
+	["blackhole"] = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/oFthiSUSer/Test2/main/BH.txt",true))()
 	end,
 	
-	["/e remotes"] = function()
+	["rtx"] = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/oFthiSUSer/Test2/main/graphics.txt",true))()
+	end,
+	
+	["night"] = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/oFthiSUSer/Test2/main/graphicsNight.txt",true))()
+	end,
+
+	["remotes"] = function()
 		for i, v in pairs(game:GetDescendants()) do
 			if v:IsA("RemoteEvent") then
 				v:FireServer()
@@ -120,8 +129,47 @@ commands = {
 		end
 	end
 }
-player.Chatted:Connect(function(message)
-	local lowerMsg = string.lower(message)
+
+
+local gui = Instance.new("ScreenGui", player.PlayerGui)
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+
+local frame = Instance.new("Frame", gui)
+frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+frame.Position = UDim2.new(0.006, 0 ,0.635, 0)
+frame.Size = UDim2.new(0.288, 0, 0.349, 0)
+
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0,4)
+
+local textBox = Instance.new("TextBox", frame)
+textBox.BackgroundTransparency = 0.5
+textBox.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+textBox.Position = UDim2.new(0.042, 0,0.072, 0)
+textBox.Size = UDim2.new(0.917, 0,0.589, 0)
+textBox.Font = Enum.Font.RobotoMono
+textBox.FontFace.Weight = Enum.FontWeight.ExtraLight
+textBox.PlaceholderColor3 = Color3.fromRGB(178, 178, 178)
+textBox.PlaceholderText = "Command"
+textBox.Text = ""
+textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+textBox.TextScaled = true
+
+local button = Instance.new("TextButton", frame)
+button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+button.Position = UDim2.new(0.141, 0, 0.718, 0)
+button.Size = UDim2.new(0.717, 0, 0.239, 0)
+button.Style = Enum.ButtonStyle.RobloxRoundDefaultButton
+button.Font = Enum.Font.RobotoMono
+button.FontFace.Weight = Enum.FontWeight.Medium
+button.Text = "Execute"
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.TextScaled = true
+
+
+button.MouseButton1Click:Connect(function()
+	local text = textBox.Text
+	local lowerMsg = string.lower(text)
 	if commands[lowerMsg] then
 		commands[lowerMsg]()
 	end
