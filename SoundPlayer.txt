@@ -16,7 +16,6 @@ local function PlayAll()
 	for i, v in pairs(game:GetDescendants()) do
 		if v:IsA("Sound") then
 			v:Play()
-		wait(0.025)
 		end
 	end
 end
@@ -25,7 +24,6 @@ local function StopAll()
 	for i, v in pairs(game:GetDescendants()) do
 		if v:IsA("Sound") then
 			v:Stop()
-		wait(0.025)
 		end
 	end
 end
