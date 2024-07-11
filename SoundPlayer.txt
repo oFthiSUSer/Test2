@@ -157,5 +157,5 @@ if SoundServ.RespectFilteringEnabled == false then
 	
 	
 else
-	Note("Cкрипт не будет работать")
+	Note("Error")
 end
