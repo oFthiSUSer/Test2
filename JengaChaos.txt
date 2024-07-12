@@ -1,0 +1,28 @@
+local player = game.Players.LocalPlayer
+
+game:GetService("RunService").Heartbeat:Connect(function()
+
+	local character = player.Character or player.CharacterAdded:Wait()
+	if character then
+		if workspace:FindFirstChild("Map"):FindFirstChild("Classic"):FindFirstChild("Button") and player.Team and player.Team.Name == "Towers" then
+			for i,v in pairs(workspace.Map.Classic.Tower:GetDescendants()) do
+				if v:IsA("BasePart") and v.Name ~= "Button" then
+					v.CanCollide = false
+					v.CanTouch = false
+				end
+			end
+			for i,v in pairs(workspace.Map.Classic:GetDescendants()) do
+				if v:IsA("BasePart") and v.Name == "Button" then
+					game.Players.LocalPlayer.Character:MoveTo(v.Position)
+				end
+			end
+			wait(0.5)
+			character:BreakJoints()
+		elseif player.Team and player.Team.Name == "Destroyer" then
+			
+			wait(0.05)
+			character:BreakJoints()
+		
+		end
+	end
+end)
