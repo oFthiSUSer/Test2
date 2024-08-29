@@ -1,0 +1,66 @@
+task.wait(0.5)
+
+local rng = Random.new()
+
+local images = {}
+local sounds = {}
+local texts = {}
+
+local function addToTable(t, v)
+	if table.find(t, v) == nil then
+		table.insert(t, v)
+	end
+end
+
+for i, v in pairs(game:GetDescendants()) do
+	if v:IsA('Decal') or v:IsA('Texture') or v:IsA('ParticleEmitter') then
+		if not v.Parent.Parent.Parent then
+			addToTable(images, v.Texture)
+		elseif v.Parent.Parent.Parent.Name ~= "Morphs" then
+			addToTable(images, v.Texture)
+		end
+	elseif v:IsA('ImageLabel') or v:IsA('ImageButton') then
+		if not v.Parent.Parent.Parent then
+			addToTable(images, v.Image)
+		elseif v.Parent.Parent.Parent.Name ~= "Morphs" then
+			addToTable(images, v.Image)
+		end
+	elseif v:IsA("Tool") and v.TextureId and v.TextureId ~= "" then
+		addToTable(images, v.TextureId)
+		if v.ToolTip and v.ToolTip ~= "" then
+			addToTable(texts, v.ToolTip)
+		end
+	elseif v:IsA('Sound') then
+		addToTable(sounds, v.SoundId)
+	elseif v:IsA('TextLabel') or v:IsA('TextButton') or v:IsA('TextBox') then
+		addToTable(texts, v.Text)
+	elseif v:IsA('ProximityPrompt')  then
+		if v.ActionText ~= "" then
+			addToTable(texts, v.ActionText)
+		end
+		if v.ObjectText ~= "" then
+			addToTable(texts, v.ObjectText)
+		end
+	end
+end
+
+
+task.wait(0.1)
+
+for i, v in pairs(game:GetDescendants()) do
+	if v:IsA('ImageLabel') or v:IsA("ImageButton") then
+		v.Image = images[rng:NextInteger(1, #images)]
+	elseif v:IsA('Decal') or v:IsA('Texture') or v:IsA('ParticleEmitter') then
+		v.Texture = images[rng:NextInteger(1, #images)]
+	elseif v:IsA('Sound') then
+		v.SoundId = sounds[rng:NextInteger(1, #sounds)]
+	elseif v:IsA('TextLabel') or v:IsA('TextButton') or v:IsA('TextBox') then
+		v.Text = texts[rng:NextInteger(1, #texts)]
+	elseif v:IsA("Tool") then
+		v.ToolTip = texts[rng:NextInteger(1, #texts)]
+		v.TextureId = images[rng:NextInteger(1, #images)]
+	elseif v:IsA('ProximityPrompt') then
+		v.ActionText = texts[rng:NextInteger(1, #texts)]
+		v.ObjectText = texts[rng:NextInteger(1, #texts)]
+	end
+end
